@@ -11,6 +11,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import ChatListItens from './components/ChatListItens';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
+import NewChat from './components/NewChat';
+import Login from './components/Login';
 
 export default () => {
 
@@ -21,18 +23,46 @@ export default () => {
         {chatId: 4, title: 'Fulano de tal', image: 'https://www.w3schools.com/howto/img_avatar2.png'},
     ])
     const [activeChat, setActiveChat] = useState({});
+    const [user, setUser] = useState(null);
+
+    const [showNewChat, setShowNewChat] = useState(false);
+    const handleNewChat = () => {
+        setShowNewChat(true);
+    }
+
+    const handleLoginData = async (u) => {
+        let newUser = {
+            id: u.uid,
+            name: u.displayName,
+            avatar: u.photoURL
+        };
+        //
+        setUser(newUser);
+    }
+
+    if(user === null){
+       return (
+            <Login onReceive={handleLoginData} />
+       ); 
+    }
 
     return (
+        
         <div className="app-window">
             <div className="sidebar">
-
+                <NewChat 
+                    chatlist={chatlist}
+                    user={user}
+                    show={showNewChat}
+                    setShow={setShowNewChat}
+                />
                 <header>
-                    <img className="header-avatar" src="https://www.w3schools.com/howto/img_avatar2.png" alt="Profile" />
+                    <img className="header-avatar" src={user.avatar} alt="Profile" />
                     <div className="header-buttons">
                         <div className="header-btn">
                             <DonutLargeIcon style={{ color: '#919191' }} />
                         </div>
-                        <div className="header-btn">
+                        <div onClick={handleNewChat} className="header-btn">
                             <ChatIcon style={{ color: '#919191' }} />
                         </div>
                         <div className="header-btn">
@@ -60,9 +90,11 @@ export default () => {
             </div>
             <div className='contentarea'>
                 {activeChat.chatId !== undefined &&
-                    <ChatWindow />
+                    <ChatWindow 
+                        user={user}
+                    />
                 }
-                {activeChat.chatId == undefined &&
+                {activeChat.chatId === undefined &&
                     <ChatIntro />
                 }   
             </div>
