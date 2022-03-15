@@ -4,19 +4,24 @@ import './login.css'
 
 export default ({onReceive}) => {
 
-    const handleFacebookLogin = async () => {
-        let result = await Api.fbPopup();
+    const handleGoogleLogin = async () => {
+        
+        let result = await Api.googleLogar();
+        console.log(result)
 
         if(result){
-
+            onReceive(result.user);
+            console.log(result)
         } else {
             alert("Erro!")
+            console.log("nao deveria estar")
         }
+        console.log("ultimo")
     }
 
     return (
         <div className="login">
-            <button onClick={handleFacebookLogin}>Logar com Facebook</button>
+            <button onClick={handleGoogleLogin}>Logar com Google</button>
         </div>
-    )
+    );
 }

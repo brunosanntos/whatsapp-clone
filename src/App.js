@@ -37,7 +37,9 @@ export default () => {
             avatar: u.photoURL
         };
         //
+        console.log(newUser)
         setUser(newUser);
+
     }
 
     if(user === null){
@@ -57,7 +59,7 @@ export default () => {
                     setShow={setShowNewChat}
                 />
                 <header>
-                    <img className="header-avatar" src={user.avatar} alt="Profile" />
+                    <img className="header-avatar" src="" alt="Profile" />
                     <div className="header-buttons">
                         <div className="header-btn">
                             <DonutLargeIcon style={{ color: '#919191' }} />
